@@ -3109,6 +3109,26 @@ figcaption {
   box-shadow: 0 2px 30px rgba(78, 46, 208, .1);
 }
 
+/* The css for the chart div */
+#chartcontrols {
+  height: auto;
+  padding: 5px 5px 0 16px;
+
+}
+
+#chartdiv {
+  width: 100%;
+  height: 500px;
+}
+
+#chartcontainer {
+  width: 95%;
+  /* margin: 2.5%; */
+  justify-content: center;
+  /* background-color: whitesmoke; */
+}
+
+
 .html-embed {
   flex: 0 auto;
   order: 0;

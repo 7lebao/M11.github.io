@@ -1,16 +1,851 @@
+<!-- Resources -->
+<script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/stock.js"></script>
+<script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+
+<!-- Chart code -->
+<script>
+  am5.ready(function () {
+
+    // Create root element
+    // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+    var root = am5.Root.new("chartdiv");
+
+    // Set themes
+    // https://www.amcharts.com/docs/v5/concepts/themes/
+    root.setThemes([
+      am5themes_Animated.new(root)
+    ]);
+
+
+    // Create chart
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/
+    var stockChart = root.container.children.push(am5stock.StockChart.new(root, {
+      panX: true,
+      panY: true,
+      //   wheelY: "zoomXY",
+      pinchZoomX: true,
+      pinchZoomY: true
+    }));
+    var mainPanel = stockChart.panels.push(am5stock.StockPanel.new(root, {
+      wheelY: "zoomX",
+      panX: true,
+      panY: true,
+      height: am5.percent(100)
+    }));
+    // var secondarypanel = stockChart.panels.push(am5stock.StockPanel.new(root, {
+    //     wheelY: "zoomX",
+    //     panX: true,
+    //     panY: true,
+    //     height: am5.percent(100)
+    // }));
+
+    //x-axis is a dayaxis, thus the months will be displayed.
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+    var xAxis = mainPanel.xAxes.push(am5xy.DateAxis.new(root, {
+      renderer: am5xy.AxisRendererX.new(root, {}),
+
+      baseInterval: { timeUnit: "hour", count: 1 },    //this translates the datetime millisecond increment to the "days"
+      //    tooltip: am5.Tooltip.new(root, {})              //function that allows the hover functions, where the x-axis cards are displayed
+    }));
+
+    var yAxiscategory = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
+      renderer: am5xy.AxisRendererY.new(root, {
+      }),
+    }));
+
+    //Creating the y-axis label
+    yAxiscategory.children.moveValue(am5.Label.new(root, {
+      rotation: -90,
+      text: "Type of Activity",
+      y: am5.p50,
+      centerX: am5.p50
+    }), 0);
+    //dont want to actually see the axis
+    yAxiscategory.hide();
+
+    var yAxishours = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
+      renderer: am5xy.AxisRendererY.new(root, {
+      }),
+    }));
+    //Creating the y-axis label
+    yAxishours.children.moveValue(am5.Label.new(root, {
+      rotation: -90,
+      text: "Hours of activity",
+      y: am5.p50,
+      centerX: am5.p50
+    }), 0);
+    //dont want to actually see the axis
+    yAxishours.hide();
+
+    var yAxisemotion = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
+      calculateTotals: true,
+      renderer: am5xy.AxisRendererY.new(root, {
+
+      }),
+      inversed: false,
+      min: 0,
+      max: 5,
+      strictMinMax: true
+      //  tooltip: am5.Tooltip.new(root, {})
+    }));
+    yAxisemotion.children.moveValue(am5.Label.new(root, {
+      rotation: -90,
+      text: "Emotion of Results",
+      y: am5.p50,
+      centerX: am5.p50,
+    }), 0);
+    yAxisemotion.hide();
+
+    var yAxisTotalHours = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
+      calculateTotals: true,
+      renderer: am5xy.AxisRendererY.new(root, {
+        inversed: false
+      }),
+      //  tooltip: am5.Tooltip.new(root, {})
+    }));
+    yAxisTotalHours.children.moveValue(am5.Label.new(root, {
+      rotation: -90,
+      text: "Total Hours",
+      y: am5.p50,
+      centerX: am5.p50,
+    }), 0);
+    yAxisTotalHours.hide();
+
+    var yAxisPeopleInvolved = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
+      calculateTotals: true,
+      renderer: am5xy.AxisRendererY.new(root, {
+        inversed: false
+      }),
+      min: 0.5,
+      max: 6.5,
+      strictMinMax: true
+    }));
+    yAxisPeopleInvolved.children.moveValue(am5.Label.new(root, {
+      rotation: -90,
+      text: "People Involved",
+      y: am5.p50,
+      centerX: am5.p50,
+    }), 0);
+    yAxisPeopleInvolved.hide();
+
+    // Create series the series are the actual values to be plotted into the graph,
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+    var seriescategory = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,                           //what Yaxis to link to (created before)
+      yAxis: yAxiscategory,
+      valueYField: "Type_number",             //what value is to be linked to the Y-axis
+      valueField: "Hours",                    //what value is to be linked to something else
+      valueXField: "Date",                    //What value is to be linked to the X-axis
+      seriesTooltipTarget: "bullet",          //what you want the series to link to see later
+    }));
+
+    var seriesemotion = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,                           //what Yaxis to link to (created before)
+      yAxis: yAxiscategory,
+      valueYField: "Emotion_result",             //what value is to be linked to the Y-axis
+      valueField: "Hours",                    //what value is to be linked to something else
+      valueXField: "Date",                    //What value is to be linked to the X-axis
+      seriesTooltipTarget: "bullet",          //what you want the series to link to see later
+    }));
+
+    var serieshours = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,                           //what Yaxis to link to (created before)
+      yAxis: yAxishours,
+      valueYField: "Hours",             //what value is to be linked to the Y-axis
+      valueField: "Hours",                //what value is to be linked to something else
+
+      valueXField: "Date",                    //What value is to be linked to the X-axis
+      seriesTooltipTarget: "bullet",          //what you want the series to link to see later
+    }));
+
+    // Create series also for the other line a new series of points is created, similar to before
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/
+    var seriesavg = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisemotion,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Emotion_result",
+      //         valueYShow: "valueYSum", //sadly no average integration in this only sum or percentage...
+      valueXField: "Date",
+      stroke: am5.color('#2148bf')
+    }));
+
+    var seriesTotalHours = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisTotalHours,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "TotalHours",
+      //         valueYShow: "valueYSum", //sadly no average integration in this only sum or percentage...
+      valueXField: "Date",
+      stroke: am5.color('#21bf55')
+    }));
+
+    var seriesPeopleInvolved1a = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person1",
+      //  valueField: "Person1",
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+
+    }));
+
+    seriesPeopleInvolved1a.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#6e9639')
+        })
+      });
+    },);
+    seriesPeopleInvolved1a.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved1b = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      //     calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person1",
+
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+    }));
+    seriesPeopleInvolved1b.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#6e9639')
+        })
+      });
+    });
+    seriesPeopleInvolved1b.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved1c = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      //     calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person1",
+
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+    }));
+    seriesPeopleInvolved1c.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#6e9639')
+        })
+      });
+    });
+    seriesPeopleInvolved1c.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved2 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      //       calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person2",
+
+      //         valueYShow: "valueYSum", //sadly no average integration in this only sum or percentage...
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+    }));
+    seriesPeopleInvolved2.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#969039')
+        })
+      });
+    });
+    seriesPeopleInvolved2.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved3 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person3",
+
+      //         valueYShow: "valueYSum", //sadly no average integration in this only sum or percentage...
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+    }));
+    seriesPeopleInvolved3.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#39967a')
+        })
+      });
+    });
+    seriesPeopleInvolved3.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved4 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      //           calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person4",
+
+      //         valueYShow: "valueYSum", //sadly no average integration in this only sum or percentage...
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+    }));
+    seriesPeopleInvolved4.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#397f96')
+        })
+      });
+    });
+    seriesPeopleInvolved4.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved5 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      //           calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person5",
+
+      //         valueYShow: "valueYSum", //sadly no average integration in this only sum or percentage...
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+    }));
+    seriesPeopleInvolved5.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#394296')
+        })
+      });
+    });
+    seriesPeopleInvolved5.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved6 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      //            calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "Person6",
+      //         valueYShow: "valueYSum", //sadly no average integration in this only sum or percentage...
+      valueXField: "Date",
+      // stroke: am5.color('#21bf55')
+    }));
+    seriesPeopleInvolved6.bullets.push(function () {
+      return am5.Bullet.new(root, {
+        sprite: am5.Circle.new(root, {
+          radius: 10,
+          fillOpacity: 0.8,
+          fill: am5.color('#793996')
+        })
+      });
+    });
+    seriesPeopleInvolved6.strokes.template.set("visible", false);
+
+    seriesTotalHours.strokes.template.setAll({
+      strokeWidth: 3
+    });
+
+    seriesavg.strokes.template.setAll({
+      strokeWidth: 3,
+    });
+    //determine whether you want to show the line, for the first not and for the second yes (default is true)
+    seriescategory.strokes.template.set("visible", false);
+    seriesemotion.strokes.template.set("visible", false);
+    serieshours.strokes.template.set("visible", false);
+
+    //this creates the bullets at the xy points of the series.
+    seriescategory.bullets.push(function () {
+      var bulletCircle = am5.Circle.new(root, {
+        radius: 5,
+        fill: seriescategory.get("fill"),
+        fillOpacity: 0.4,
+        toggleKey: "active",
+        showTooltipOn: "hover",
+        tooltipText: "Click",
+
+      }, circleTemplate);
+
+      // .bulletCircle.on("Highlight", function (active, target) {
+      //     if (active) {
+      //         target.setAll({
+      //             fillOpacity: 1,
+      //         })
+      //     }
+
+      // });
+      bulletCircle.on("active", function (active, target) {
+        if (active) {
+          target.setAll({
+            // maxWidth: 100,
+            // wrap: true,
+            showTooltipOn: "always",
+            tooltipText: "[bold]{Title}[\]\n{Description}\nActivity Type: {Type} \nHours: {Hours}\nDate: {Date.formatDate('MMM dt')}\nEmotion Result: {Emotion_result}"
+
+          });
+        }
+        else {
+          target.setAll({
+            showTooltipOn: "hover",
+            tooltipText: "Click"
+          });
+        }
+        target.showTooltip();
+      });
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle
+      });
+    });
+
+    seriesemotion.bullets.push(function () {
+      var bulletCircle = am5.Circle.new(root, {
+        radius: 5,
+        fill: seriescategory.get("fill"),
+        fillOpacity: 0.4,
+        toggleKey: "active",
+        showTooltipOn: "hover",
+        tooltipText: "Click",
+
+      }, circleTemplate);
+
+      bulletCircle.on("active", function (active, target) {
+        if (active) {
+          target.setAll({
+            // maxWidth: 100,
+            // wrap: true,
+            showTooltipOn: "always",
+            tooltipText: "[bold]{Title}[\]\n{Description}\nActivity Type: {Type} \nHours: {Hours}\nDate: {Date.formatDate('MMM dt')}\nEmotion Result: {Emotion_result}"
+
+          });
+        }
+        else {
+          target.setAll({
+            showTooltipOn: "hover",
+            tooltipText: "Click"
+          });
+        }
+        target.showTooltip();
+      });
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle
+      });
+    });
+
+    serieshours.bullets.push(function () {
+      var bulletCircle = am5.Circle.new(root, {
+        radius: 5,
+        fill: seriescategory.get("fill"),
+        fillOpacity: 0.4,
+        toggleKey: "active",
+        showTooltipOn: "hover",
+        tooltipText: "Click",
+
+      }, circleTemplate);
+
+      bulletCircle.on("active", function (active, target) {
+        if (active) {
+          target.setAll({
+            // maxWidth: 100,
+            // wrap: true,
+            showTooltipOn: "always",
+            tooltipText: "[bold]{Title}[\]\n{Description}\nActivity Type: {Type} \nHours: {Hours}\nDate: {Date.formatDate('MMM dt')}\nEmotion Result: {Emotion_result}"
+
+          });
+        }
+        else {
+          target.setAll({
+            showTooltipOn: "hover",
+            tooltipText: "Click"
+          });
+        }
+        target.showTooltip();
+      });
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle
+      });
+    });
+    //the circletemplate is used for additional "make-up" of the bullets, in the bullets there is a link back, 
+    // In this case it makes the colors of the bullets.
+    var circleTemplate = am5.Template.new({});
+    circleTemplate.adapters.add("fill", function (fill, target) {
+      var dataItem = target.dataItem;
+      if (dataItem) {
+        return am5.Color.fromString(dataItem.dataContext.color);
+      }
+      return fill
+    });
+
+    // Add heat rules, in this case it changes the radius of the bullets dependant on the datafield
+    seriescategory.set("heatRules", [{
+      target: circleTemplate,
+      min: 3,
+      max: 30,
+      dataField: "value",
+      key: "radius"
+    }]);
+
+    // Set data
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/series/#Setting_data
+    //load the data
+    am5.net.load("https://raw.githubusercontent.com/MaasGoudswaard/amcharts/main/data_after.csv").then(function (result) {
+      // Parse loaded data
+
+      var data = am5.CSVParser.parse(result.response, {
+        delimiter: ";",     //important!!
+        //               reverse: true,
+        skipEmpty: true,
+        useColumnNames: true
+      });
+
+      // Process data (convert dates and values)
+      var processor = am5.DataProcessor.new(root, {
+        dateFields: ["Date"],
+        dateFormat: "yyyy-MM-dd HH:mm:ss",  // "1900-02-13 00:00:00"
+        //   dateFormat: "dd/MM/yyyy",
+        numericFields: ["Emotion_result", "Hours", "Type_number", "TotalHours"],
+      });
+      processor.processMany(data);
+      console.log(data);
+      // what it looks like: {Date: 12178800000, Description: 'Brainstorming about how to build my protot…eling pieces and creating a laser cut file', Emotion_result: 2, Hours: 2, Person1: 'TRUE', …}
+
+
+
+      //Set the loaded data into the series, in the series the collumn labels are used and are case sensitive etc.
+      seriescategory.data.setAll(data);
+      seriescategory.hide();
+
+      seriesavg.data.setAll(data);
+      seriesavg.hide();
+
+      seriesTotalHours.data.setAll(data);
+      seriesTotalHours.hide();
+
+      seriesemotion.data.setAll(data);
+      seriesemotion.hide();
+
+      serieshours.data.setAll(data);
+      serieshours.hide();
+
+      seriesPeopleInvolved1a.data.setAll(data);
+      seriesPeopleInvolved1a.hide();
+      seriesPeopleInvolved2.data.setAll(data);
+      seriesPeopleInvolved2.hide();
+      seriesPeopleInvolved3.data.setAll(data);
+      seriesPeopleInvolved3.hide();
+      seriesPeopleInvolved4.data.setAll(data);
+      seriesPeopleInvolved4.hide();
+      seriesPeopleInvolved5.data.setAll(data);
+      seriesPeopleInvolved5.hide();
+      seriesPeopleInvolved6.data.setAll(data);
+      seriesPeopleInvolved6.hide();
+
+
+    });
+
+
+    // Add scrollbars
+    // https://www.amcharts.com/docs/v5/charts/xy-chart/scrollbars/
+    mainPanel.set("scrollbarX", am5.Scrollbar.new(root, {
+      orientation: "horizontal"
+    }));
+
+    mainPanel.set("scrollbarY", am5.Scrollbar.new(root, {
+      orientation: "vertical"
+    }));
+
+    var myDropdown = am5stock.DropdownListControl.new(root, {
+      stockChart: stockChart,
+      name: "Select Charts",
+      fixedLabel: true,
+      items: [
+        {
+          id: "type1",
+          label: "Category",
+          form: "radio",
+          value: "1",
+        }, {
+          id: "type1",
+          label: "Emotion Result",
+          form: "radio",
+          value: "2"
+        }, {
+          id: "type1",
+          label: "Hours",
+          form: "radio",
+          value: "3"
+        }
+        //     {
+        //     id: "category",
+        //     label: "Categories",
+        //     form: "radio",
+        //     value: "",
+        //     checked: false
+        // },
+
+        // {
+        //     id: "totalhours",
+        //     label: "Total Hours",
+        //     form: "radio",
+        //     value: "",
+        //     checked: false
+        // },
+        // {
+        //     id: "emotionresult",
+        //     label: "Emotion of result",
+        //     form: "radio",
+        //     value: "",
+        //     checked: false
+        // }, {
+        //     id: "emotionprocess",
+        //     label: "Smiley/ Activity",
+        //     form: "radio",
+        //     value: "",
+        //     checked: false
+        // },
+      ]
+    });
+
+
+    myDropdown.getPrivate("dropdown").events.on("changed", function (ev) {
+      console.log(ev);
+      if (ev.item.value == '1') {
+        if (ev.checked == true) {
+          seriesemotion.hide();
+          yAxisemotion.hide();
+          serieshours.hide();
+          yAxishours.hide();
+
+          seriescategory.show();
+          yAxiscategory.show();
+        }
+      }
+      if (ev.item.value == '2') {
+        if (ev.checked == true) {
+          seriescategory.hide();
+          yAxiscategory.hide();
+          serieshours.hide();
+          yAxishours.hide();
+
+          seriesemotion.show();
+          yAxisemotion.show();
+        }
+      }
+      if (ev.item.value == '3') {
+        if (ev.checked == true) {
+          seriescategory.hide();
+          yAxiscategory.hide();
+          seriesemotion.hide();
+          yAxisemotion.hide();
+
+          serieshours.show();
+          yAxishours.show();
+        }
+      }
+    });
+
+    var myDropdown2 = am5stock.DropdownListControl.new(root, {
+      stockChart: stockChart,
+      name: "Highlight involvement",
+      fixedLabel: true,
+      items: [{
+        id: "heading1",
+        label: "Under Construction",
+        className: "am5stock-list-info am5stock-list-heading"
+      },
+      {
+        id: "person1",
+        label: "Nikki",
+        form: "checkbox",
+      }, {
+        id: "person2",
+        label: "Leqi",
+        form: "checkbox",
+      },
+      {
+        id: "person3",
+        label: "Jelmer",
+        form: "checkbox",
+      },
+      {
+        id: "person4",
+        label: "Maas",
+        form: "checkbox",
+      },
+      {
+        id: "person5",
+        label: "Coach",
+        form: "checkbox",
+      },
+      {
+        id: "person6",
+        label: "External",
+        form: "checkbox",
+      }
+      ]
+    });
+
+    myDropdown2.getPrivate("dropdown").events.on("changed", function (ev) {
+      console.log(ev);
+      if (ev.checked == true) {
+        // yAxisPeopleInvolved.show();
+      }
+      else {
+        yAxisPeopleInvolved.hide();
+      }
+
+      if (ev.item.id == 'person1') {
+        if (ev.checked == true) {
+          // console.log([[Person1]]);
+          seriesPeopleInvolved1a.show();
+        }
+        else {
+          seriesPeopleInvolved1a.hide();
+        }
+      }
+      if (ev.item.id == 'person2') {
+        if (ev.checked == true) {
+          seriesPeopleInvolved2.show();
+        }
+        else {
+          seriesPeopleInvolved2.hide();
+        }
+      }
+      if (ev.item.id == 'person3') {
+        if (ev.checked == true) {
+          seriesPeopleInvolved3.show();
+        }
+        else {
+          seriesPeopleInvolved3.hide();
+        }
+      }
+      if (ev.item.id == 'person4') {
+        if (ev.checked == true) {
+          seriesPeopleInvolved4.show();
+        }
+        else {
+          seriesPeopleInvolved4.hide();
+        }
+      }
+      if (ev.item.id == 'person5') {
+        if (ev.checked == true) {
+          seriesPeopleInvolved5.show();
+        }
+        else {
+          seriesPeopleInvolved5.hide();
+        }
+      }
+      if (ev.item.id == 'person6') {
+        if (ev.checked == true) {
+          seriesPeopleInvolved6.show();
+        }
+        else {
+          seriesPeopleInvolved6.hide();
+        }
+      }
+
+    });
+    var myDropdown3 = am5stock.DropdownListControl.new(root, {
+      stockChart: stockChart,
+      name: "Additional overlays",
+      fixedLabel: true,
+      items: [
+        {
+          id: "hourssum",
+          label: "Sum of Hours",
+          form: "checkbox",
+        }, {
+          id: "emotionresult",
+          label: "Emotion of result",
+          form: "checkbox",
+        }
+        , {
+          id: "peopleinvolved",
+          label: "People involvement",
+          form: "checkbox",
+        }
+      ]
+    });
+    myDropdown3.getPrivate("dropdown").events.on("changed", function (ev) {
+      console.log(ev);
+      if (ev.item.id == 'hourssum') {
+        if (ev.checked == true) {
+          seriesTotalHours.show();
+          yAxisTotalHours.show();
+        }
+        else {
+          seriesTotalHours.hide();
+          yAxisTotalHours.hide();
+        }
+      }
+      if (ev.item.id == 'emotionresult') {
+        if (ev.checked == true) {
+          seriesavg.show();
+          yAxisemotion.show();
+        }
+        else {
+          seriesavg.hide();
+          yAxisemotion.hide();
+        }
+      }
+      if (ev.item.id == 'peopleinvolved') {
+        if (ev.checked == true) {
+          seriesPeopleInvolved.show();
+          yAxisPeopleInvolved.show();
+        }
+        else {
+          seriesPeopleInvolved.hide();
+          yAxisPeopleInvolved.hide();
+        }
+      }
+    });
+    var toolbar = am5stock.StockToolbar.new(root, {
+      container: document.getElementById("chartcontrols"),
+      stockChart: stockChart,
+      controls: [
+
+
+        am5stock.DrawingControl.new(root, {
+          stockChart: stockChart,
+          tools: ["Callout", "Arrows &amp; Icons", "Rectangle", 'Doodle']
+        }),
+        am5stock.ResetControl.new(root, {
+          stockChart: stockChart
+        }),
+        myDropdown,
+        myDropdown2,
+        myDropdown3
+      ]
+    })
+
+  }); // end am5.ready()
+
+</script>
+
 <!DOCTYPE html><!--  This site was created in Webflow. https://www.webflow.com  -->
 <!--  Last Published: Sun Jun 04 2023 19:04:22 GMT+0000 (Coordinated Universal Time)  -->
 <html data-wf-page="647b71c62eaf2b1b44c580f5" data-wf-site="647b71c52eaf2b1b44c580b0" lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>visualizaition</title>
   <meta content="Search 10M+ of prompts, and generate AI art and AI images via BeriaAI" name="description">
   <meta content="visualizaition" property="og:title">
   <meta content="Search 10M+ of prompts, and generate AI art and AI images via BeriaAI" property="og:description">
-  <meta content="https://uploads-ssl.webflow.com/6427381726a472874096a798/64273955a53a59ff52a5555e_Logo-1.jpg" property="og:image">
+  <meta content="https://uploads-ssl.webflow.com/6427381726a472874096a798/64273955a53a59ff52a5555e_Logo-1.jpg"
+    property="og:image">
   <meta content="visualizaition" property="twitter:title">
   <meta content="Search 10M+ of prompts, and generate AI art and AI images via BeriaAI" property="twitter:description">
-  <meta content="https://uploads-ssl.webflow.com/6427381726a472874096a798/64273955a53a59ff52a5555e_Logo-1.jpg" property="twitter:image">
+  <meta content="https://uploads-ssl.webflow.com/6427381726a472874096a798/64273955a53a59ff52a5555e_Logo-1.jpg"
+    property="twitter:image">
   <meta property="og:type" content="website">
   <meta content="summary_large_image" name="twitter:card">
   <meta content="width=device-width, initial-scale=1" name="viewport">
@@ -21,61 +856,77 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-  <script type="text/javascript">WebFont.load({  google: {    families: ["Inter:300,regular,500,600","Poppins:100,200,300,regular,500,600,700,800,900:devanagari,latin,latin-ext"]  }});</script>
-  <script type="text/javascript">!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <script
+    type="text/javascript">WebFont.load({ google: { families: ["Inter:300,regular,500,600", "Poppins:100,200,300,regular,500,600,700,800,900:devanagari,latin,latin-ext"] } });</script>
+  <script
+    type="text/javascript">!function (o, c) { var n = c.documentElement, t = " w-mod-"; n.className += t + "js", ("ontouchstart" in o || o.DocumentTouch && c instanceof DocumentTouch) && (n.className += t + "touch") }(window, document);</script>
   <link href="images/favicon.png" rel="shortcut icon" type="image/x-icon">
   <link href="images/webclip.png" rel="apple-touch-icon">
 </head>
+
 <body>
   <div class="page-wrapper">
     <div class="global-styles w-embed">
       <style>
-/* Make text look crisper and more legible in all browsers */
-body {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-}
-/* Focus state style for keyboard navigation for the focusable elements */
-*[tabindex]:focus-visible,
-  input[type="file"]:focus-visible {
-   outline: 0.125rem solid #4d65ff;
-   outline-offset: 0.125rem;
-}
-/* Get rid of top margin on first element in any rich text element */
-.w-richtext > :not(div):first-child, .w-richtext > div:first-child > :first-child {
-  margin-top: 0 !important;
-}
-/* Get rid of bottom margin on last element in any rich text element */
-.w-richtext>:last-child, .w-richtext ol li:last-child, .w-richtext ul li:last-child {
-	margin-bottom: 0 !important;
-}
-/* Prevent all click and hover interaction with an element */
-.pointer-events-off {
-	pointer-events: none;
-}
-/* Enables all click and hover interaction with an element */
-.pointer-events-on {
-  pointer-events: auto;
-}
-/* Create a class of .div-square which maintains a 1:1 dimension of a div */
-.div-square::after {
-	content: "";
-	display: block;
-	padding-bottom: 100%;
-}
-/* Make sure containers never lose their center alignment */
-.container-medium,.container-small, .container-large {
-	margin-right: auto !important;
-  margin-left: auto !important;
-}
-/* 
+        /* Make text look crisper and more legible in all browsers */
+        body {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+          font-smoothing: antialiased;
+          text-rendering: optimizeLegibility;
+        }
+
+        /* Focus state style for keyboard navigation for the focusable elements */
+        *[tabindex]:focus-visible,
+        input[type="file"]:focus-visible {
+          outline: 0.125rem solid #4d65ff;
+          outline-offset: 0.125rem;
+        }
+
+        /* Get rid of top margin on first element in any rich text element */
+        .w-richtext> :not(div):first-child,
+        .w-richtext>div:first-child> :first-child {
+          margin-top: 0 !important;
+        }
+
+        /* Get rid of bottom margin on last element in any rich text element */
+        .w-richtext>:last-child,
+        .w-richtext ol li:last-child,
+        .w-richtext ul li:last-child {
+          margin-bottom: 0 !important;
+        }
+
+        /* Prevent all click and hover interaction with an element */
+        .pointer-events-off {
+          pointer-events: none;
+        }
+
+        /* Enables all click and hover interaction with an element */
+        .pointer-events-on {
+          pointer-events: auto;
+        }
+
+        /* Create a class of .div-square which maintains a 1:1 dimension of a div */
+        .div-square::after {
+          content: "";
+          display: block;
+          padding-bottom: 100%;
+        }
+
+        /* Make sure containers never lose their center alignment */
+        .container-medium,
+        .container-small,
+        .container-large {
+          margin-right: auto !important;
+          margin-left: auto !important;
+        }
+
+        /* 
 Make the following elements inherit typography styles from the parent and not have hardcoded values. 
 Important: You will not be able to style for example "All Links" in Designer with this CSS applied.
 Uncomment this CSS to use it in the project. Leave this message for future hand-off.
 */
-/*
+        /*
 a,
 .w-input,
 .w-select,
@@ -89,121 +940,153 @@ a,
   font-size: inherit;
 }
 */
-/* Apply "..." after 3 lines of text */
-.text-style-3lines {
-	display: -webkit-box;
-	overflow: hidden;
-	-webkit-line-clamp: 3;
-	-webkit-box-orient: vertical;
-}
-/* Apply "..." after 2 lines of text */
-.text-style-2lines {
-	display: -webkit-box;
-	overflow: hidden;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-}
-/* Adds inline flex display */
-.display-inlineflex {
-  display: inline-flex;
-}
-/* These classes are never overwritten */
-.hide {
-  display: none !important;
-}
-@media screen and (max-width: 991px) {
-    .hide, .hide-tablet {
-        display: none !important;
-    }
-}
-  @media screen and (max-width: 767px) {
-    .hide-mobile-landscape{
-      display: none !important;
-    }
-}
-  @media screen and (max-width: 479px) {
-    .hide-mobile{
-      display: none !important;
-    }
-}
-.margin-0 {
-  margin: 0rem !important;
-}
-.padding-0 {
-  padding: 0rem !important;
-}
-.spacing-clean {
-padding: 0rem !important;
-margin: 0rem !important;
-}
-.margin-top {
-  margin-right: 0rem !important;
-  margin-bottom: 0rem !important;
-  margin-left: 0rem !important;
-}
-.padding-top {
-  padding-right: 0rem !important;
-  padding-bottom: 0rem !important;
-  padding-left: 0rem !important;
-}
-.margin-right {
-  margin-top: 0rem !important;
-  margin-bottom: 0rem !important;
-  margin-left: 0rem !important;
-}
-.padding-right {
-  padding-top: 0rem !important;
-  padding-bottom: 0rem !important;
-  padding-left: 0rem !important;
-}
-.margin-bottom {
-  margin-top: 0rem !important;
-  margin-right: 0rem !important;
-  margin-left: 0rem !important;
-}
-.padding-bottom {
-  padding-top: 0rem !important;
-  padding-right: 0rem !important;
-  padding-left: 0rem !important;
-}
-.margin-left {
-  margin-top: 0rem !important;
-  margin-right: 0rem !important;
-  margin-bottom: 0rem !important;
-}
-.padding-left {
-  padding-top: 0rem !important;
-  padding-right: 0rem !important;
-  padding-bottom: 0rem !important;
-}
-.margin-horizontal {
-  margin-top: 0rem !important;
-  margin-bottom: 0rem !important;
-}
-.padding-horizontal {
-  padding-top: 0rem !important;
-  padding-bottom: 0rem !important;
-}
-.margin-vertical {
-  margin-right: 0rem !important;
-  margin-left: 0rem !important;
-}
-.padding-vertical {
-  padding-right: 0rem !important;
-  padding-left: 0rem !important;
-}
-</style>
+        /* Apply "..." after 3 lines of text */
+        .text-style-3lines {
+          display: -webkit-box;
+          overflow: hidden;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+        }
+
+        /* Apply "..." after 2 lines of text */
+        .text-style-2lines {
+          display: -webkit-box;
+          overflow: hidden;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+        }
+
+        /* Adds inline flex display */
+        .display-inlineflex {
+          display: inline-flex;
+        }
+
+        /* These classes are never overwritten */
+        .hide {
+          display: none !important;
+        }
+
+        @media screen and (max-width: 991px) {
+
+          .hide,
+          .hide-tablet {
+            display: none !important;
+          }
+        }
+
+        @media screen and (max-width: 767px) {
+          .hide-mobile-landscape {
+            display: none !important;
+          }
+        }
+
+        @media screen and (max-width: 479px) {
+          .hide-mobile {
+            display: none !important;
+          }
+        }
+
+        .margin-0 {
+          margin: 0rem !important;
+        }
+
+        .padding-0 {
+          padding: 0rem !important;
+        }
+
+        .spacing-clean {
+          padding: 0rem !important;
+          margin: 0rem !important;
+        }
+
+        .margin-top {
+          margin-right: 0rem !important;
+          margin-bottom: 0rem !important;
+          margin-left: 0rem !important;
+        }
+
+        .padding-top {
+          padding-right: 0rem !important;
+          padding-bottom: 0rem !important;
+          padding-left: 0rem !important;
+        }
+
+        .margin-right {
+          margin-top: 0rem !important;
+          margin-bottom: 0rem !important;
+          margin-left: 0rem !important;
+        }
+
+        .padding-right {
+          padding-top: 0rem !important;
+          padding-bottom: 0rem !important;
+          padding-left: 0rem !important;
+        }
+
+        .margin-bottom {
+          margin-top: 0rem !important;
+          margin-right: 0rem !important;
+          margin-left: 0rem !important;
+        }
+
+        .padding-bottom {
+          padding-top: 0rem !important;
+          padding-right: 0rem !important;
+          padding-left: 0rem !important;
+        }
+
+        .margin-left {
+          margin-top: 0rem !important;
+          margin-right: 0rem !important;
+          margin-bottom: 0rem !important;
+        }
+
+        .padding-left {
+          padding-top: 0rem !important;
+          padding-right: 0rem !important;
+          padding-bottom: 0rem !important;
+        }
+
+        .margin-horizontal {
+          margin-top: 0rem !important;
+          margin-bottom: 0rem !important;
+        }
+
+        .padding-horizontal {
+          padding-top: 0rem !important;
+          padding-bottom: 0rem !important;
+        }
+
+        .margin-vertical {
+          margin-right: 0rem !important;
+          margin-left: 0rem !important;
+        }
+
+        .padding-vertical {
+          padding-right: 0rem !important;
+          padding-left: 0rem !important;
+        }
+
+
+
+      </style>
     </div>
     <main class="main-wrapper">
-      <div data-animation="default" class="navbar w-nav" data-easing2="ease" fs-scrolldisable-element="smart-nav" data-easing="ease" data-collapse="medium" data-w-id="46a1a930-a937-37fe-bcca-d83df445cdbd" role="banner" data-duration="400">
+      <div data-animation="default" class="navbar w-nav" data-easing2="ease" fs-scrolldisable-element="smart-nav"
+        data-easing="ease" data-collapse="medium" data-w-id="46a1a930-a937-37fe-bcca-d83df445cdbd" role="banner"
+        data-duration="400">
         <h1 class="heading-6">Project Tracker.</h1>
         <div class="w-layout-grid grid-3">
-          <nav role="navigation" id="w-node-_46a1a930-a937-37fe-bcca-d83df445cdc2-f445cdbd" class="navbar2_menu is-page-height-tablet w-nav-menu">
+          <nav role="navigation" id="w-node-_46a1a930-a937-37fe-bcca-d83df445cdc2-f445cdbd"
+            class="navbar2_menu is-page-height-tablet w-nav-menu">
             <a href="old-home.html" class="navbar2_link w-nav-link">Activity Card</a>
             <a href="discover.html" class="navbar2_link w-nav-link">Data</a>
             <a href="generate-art.html" aria-current="page" class="navbar2_link w-nav-link w--current">Visualization</a>
           </nav>
-          <div id="w-node-f9c07388-9b0f-4fda-01dd-fc545566e604-f445cdbd" class="div-block"><img src="images/WechatIMG2069.jpeg" loading="lazy" sizes="40px" srcset="images/WechatIMG2069-p-500.jpeg 500w, images/WechatIMG2069.jpeg 640w" alt="" class="dashboard-user-profile-pic pic">
+          <div id="w-node-f9c07388-9b0f-4fda-01dd-fc545566e604-f445cdbd" class="div-block"><img
+              src="images/WechatIMG2069.jpeg" loading="lazy" sizes="40px"
+              srcset="images/WechatIMG2069-p-500.jpeg 500w, images/WechatIMG2069.jpeg 640w" alt=""
+              class="dashboard-user-profile-pic pic">
             <div data-hover="true" data-delay="0" class="dropdown w-dropdown">
               <div class="dropdown-toggle-2 w-dropdown-toggle">
                 <div class="icon w-icon-dropdown-toggle"></div>
@@ -225,12 +1108,22 @@ margin: 0rem !important;
     <div class="padding-global">
       <div class="padding-section-small">
         <div class="main-content">
-          <div class="cards"></div>
+
+          <div class="cards">
+            <div id="chartcontainer">
+              <div id="chartcontrols"></div>
+              <div id="chartdiv"></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </header>
-  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=647b71c52eaf2b1b44c580b0" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=647b71c52eaf2b1b44c580b0"
+    type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script>
   <script src="js/webflow.js" type="text/javascript"></script>
+
 </body>
+
 </html>

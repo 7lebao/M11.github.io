@@ -44,10 +44,14 @@
     //x-axis is a dayaxis, thus the months will be displayed.
     // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
     var xAxis = mainPanel.xAxes.push(am5xy.DateAxis.new(root, {
-      renderer: am5xy.AxisRendererX.new(root, {}),
+      // renderer: am5xy.AxisRendererX.new(root, {}),
 
       baseInterval: { timeUnit: "hour", count: 1 },    //this translates the datetime millisecond increment to the "days"
       //    tooltip: am5.Tooltip.new(root, {})              //function that allows the hover functions, where the x-axis cards are displayed
+
+      renderer: am5xy.AxisRendererX.new(root, {
+        minGridDistance: 100
+      }),
     }));
 
     var yAxiscategory = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {

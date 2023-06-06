@@ -558,7 +558,8 @@
           yAxisemotion.hide();
           serieshours.hide();
           yAxishours.hide();
-
+          legend1.show();
+          legend2.show();
           seriescategory.show();
           //    yAxiscategory.show();
         }
@@ -742,22 +743,63 @@
         myDropdown3
       ]
     })
-    var legend = stockChart.children.push(am5.Legend.new(root, {
+
+    var legend1 = stockChart.children.push(am5.Legend.new(root, {
       nameField: "name",
       fillField: "color",
       strokeField: "color",
-      centerX: am5.percent(50),
-      x: am5.percent(50)
+      centerX: am5.percent(20),
+      x: am5.percent(20)
     }));
 
-    legend.data.setAll([{
-      name: "Under budget",
-      color: am5.color(0x297373)
+    legend1.data.setAll([{
+      name: "Background Research",
+      color: am5.color("#fc0303")
     }, {
-      name: "Over budget",
-      color: am5.color(0xff621f)
-    }]);
+      name: "Problem Definition",
+      color: am5.color("#fca50")
+    }, {
+      name: "Concept Definition",
+      color: am5.color("#e8fc03")
+    }, {
+      name: "Concept Development",
+      color: am5.color("#77fc03")
+    }, {
+      name: "Brainstorm / Ideate",
+      color: am5.color("#03fcca")
+    },
+    ]);
+    var legend2 = stockChart.children.push(am5.Legend.new(root, {
+      nameField: "name",
+      fillField: "color",
+      strokeField: "color",
+      // fillOpacity: 0.5,
+      centerX: am5.percent(20),
+      x: am5.percent(20)
+    }));
 
+    legend2.data.setAll([{
+      name: "Analyzing",
+      color: am5.color("#03ecfc")
+    }, {
+      name: "Testing",
+      color: am5.color("#0398fc")
+    }, {
+      name: "Prototype Building",
+      color: am5.color("#030ffc")
+    }, {
+      name: "Organization",
+      color: am5.color("#ad03fc")
+    }, {
+      name: "Validating",
+      color: am5.color("#fc03e3")
+    }, {
+      name: "Evaluating",
+      color: am5.color("#fc0345")
+    },
+    ]);
+    legend1.hide();
+    legend2.hide();
   }); // end am5.ready()
 
 </script>

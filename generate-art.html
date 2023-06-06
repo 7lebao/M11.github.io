@@ -87,7 +87,7 @@
       inversed: false,
       min: 0,
       max: 5,
-      //   strictMinMax: true
+      strictMinMax: true
       //  tooltip: am5.Tooltip.new(root, {})
     }));
     yAxisemotion.children.moveValue(am5.Label.new(root, {
@@ -558,8 +558,10 @@
           yAxisemotion.hide();
           serieshours.hide();
           yAxishours.hide();
+
           legend1.show();
           legend2.show();
+
           seriescategory.show();
           //    yAxiscategory.show();
         }
@@ -571,6 +573,9 @@
           serieshours.hide();
           yAxishours.hide();
 
+          legend1.show();
+          legend2.show();
+
           seriesemotion.show();
           yAxisemotion.show();
         }
@@ -581,6 +586,9 @@
           yAxiscategory.hide();
           seriesemotion.hide();
           yAxisemotion.hide();
+
+          legend1.show();
+          legend2.show();
 
           serieshours.show();
           yAxishours.show();

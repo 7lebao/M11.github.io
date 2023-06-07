@@ -86,11 +86,10 @@
     var yAxisemotion = mainPanel.yAxes.push(am5xy.ValueAxis.new(root, {
       calculateTotals: true,
       renderer: am5xy.AxisRendererY.new(root, {
-
       }),
       inversed: false,
-      min: 0,
-      max: 5,
+      min: 0.5,
+      max: 5.5,
       strictMinMax: true
       //  tooltip: am5.Tooltip.new(root, {})
     }));
@@ -122,9 +121,6 @@
       renderer: am5xy.AxisRendererY.new(root, {
         inversed: false
       }),
-      min: 0.5,
-      max: 6.5,
-      strictMinMax: true
     }));
     yAxisPeopleInvolved.children.moveValue(am5.Label.new(root, {
       rotation: -90,
@@ -150,7 +146,7 @@
     var seriesemotion = mainPanel.series.push(am5xy.LineSeries.new(root, {
       calculateAggregates: true,
       xAxis: xAxis,                           //what Yaxis to link to (created before)
-      yAxis: yAxiscategory,
+      yAxis: yAxisemotion,
       valueYField: "11",             //what value is to be linked to the Y-axis
       valueField: "4",                    //what value is to be linked to something else
       valueXField: "0",                    //What value is to be linked to the X-axis
@@ -183,112 +179,533 @@
       stroke: am5.color('#21bf55')
     }));
 
+
     var seriesPeopleInvolved1 = mainPanel.series.push(am5xy.LineSeries.new(root, {
       calculateAggregates: true,
       xAxis: xAxis,
       yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
-      valueYField: "5",
+      valueYField: "4",
+      valueField: "5",
       valueXField: "0",
     }));
-
+    var circleTemplatepeople1 = am5.Template.new({});
     seriesPeopleInvolved1.bullets.push(function () {
+      var bulletCircle1 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#f0fc00')
+      }, circleTemplatepeople1);
       return am5.Bullet.new(root, {
-        sprite: am5.Circle.new(root, {
-          radius: 10,
-          fillOpacity: 0.8,
-          fill: am5.color('#6e9639')
-        })
+        sprite: bulletCircle1
       });
     },);
+    seriesPeopleInvolved1.set("heatRules", [{
+      target: circleTemplatepeople1,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
     seriesPeopleInvolved1.strokes.template.set("visible", false);
 
 
     var seriesPeopleInvolved2 = mainPanel.series.push(am5xy.LineSeries.new(root, {
-
+      calculateAggregates: true,
       xAxis: xAxis,
       yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
-      valueYField: "6",
+      valueYField: "4",
+      valueField: "6",
+
       valueXField: "0",
     }));
+    var circleTemplatepeople2 = am5.Template.new({});
     seriesPeopleInvolved2.bullets.push(function () {
+      var bulletCircle2 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#47fc00')
+      }, circleTemplatepeople2);
       return am5.Bullet.new(root, {
-        sprite: am5.Circle.new(root, {
-          radius: 10,
-          fillOpacity: 0.8,
-          fill: am5.color('#969039')
-        })
+        sprite: bulletCircle2
       });
-    });
+    },);
+    seriesPeopleInvolved2.set("heatRules", [{
+      target: circleTemplatepeople2,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
     seriesPeopleInvolved2.strokes.template.set("visible", false);
+
 
     var seriesPeopleInvolved3 = mainPanel.series.push(am5xy.LineSeries.new(root, {
       calculateAggregates: true,
       xAxis: xAxis,
       yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
-      valueYField: "7",
+      valueYField: "4",
+      valueField: "7",
       valueXField: "0",
     }));
+    var circleTemplatepeople3 = am5.Template.new({});
     seriesPeopleInvolved3.bullets.push(function () {
+      var bulletCircle3 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#00fcf4')
+      }, circleTemplatepeople3);
       return am5.Bullet.new(root, {
-        sprite: am5.Circle.new(root, {
-          radius: 10,
-          fillOpacity: 0.8,
-          fill: am5.color('#39967a')
-        })
+        sprite: bulletCircle3
       });
-    });
+    },);
+    seriesPeopleInvolved3.set("heatRules", [{
+      target: circleTemplatepeople3,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
     seriesPeopleInvolved3.strokes.template.set("visible", false);
 
+
     var seriesPeopleInvolved4 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
       xAxis: xAxis,
       yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
-      valueYField: "8",
+      valueYField: "4",
+      valueField: "8",
       valueXField: "0",
     }));
+    var circleTemplatepeople4 = am5.Template.new({});
     seriesPeopleInvolved4.bullets.push(function () {
+      var bulletCircle4 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#003ffc')
+      }, circleTemplatepeople4);
       return am5.Bullet.new(root, {
-        sprite: am5.Circle.new(root, {
-          radius: 10,
-          fillOpacity: 0.8,
-          fill: am5.color('#397f96')
-        })
+        sprite: bulletCircle4
       });
-    });
+    },);
+    seriesPeopleInvolved4.set("heatRules", [{
+      target: circleTemplatepeople4,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
     seriesPeopleInvolved4.strokes.template.set("visible", false);
 
     var seriesPeopleInvolved5 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
       xAxis: xAxis,
       yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
-      valueYField: "9",
+      valueYField: "4",
+      valueField: "9",
       valueXField: "0",
     }));
+    var circleTemplatepeople5 = am5.Template.new({});
     seriesPeopleInvolved5.bullets.push(function () {
+      var bulletCircle5 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#e700fc')
+      }, circleTemplatepeople5);
       return am5.Bullet.new(root, {
-        sprite: am5.Circle.new(root, {
-          radius: 10,
-          fillOpacity: 0.8,
-          fill: am5.color('#394296')
-        })
+        sprite: bulletCircle5
       });
-    });
+    },);
+    seriesPeopleInvolved5.set("heatRules", [{
+      target: circleTemplatepeople5,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
     seriesPeopleInvolved5.strokes.template.set("visible", false);
 
     var seriesPeopleInvolved6 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
       xAxis: xAxis,
       yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
-      valueYField: "10",
+      valueYField: "4",
+      valueField: "10",
       valueXField: "0",
     }));
+    var circleTemplatepeople6 = am5.Template.new({});
     seriesPeopleInvolved6.bullets.push(function () {
+      var bulletCircle6 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#fc0022')
+      }, circleTemplatepeople6);
+
       return am5.Bullet.new(root, {
-        sprite: am5.Circle.new(root, {
-          radius: 10,
-          fillOpacity: 0.8,
-          fill: am5.color('#793996')
-        })
+        sprite: bulletCircle6
       });
-    });
+    },);
+    seriesPeopleInvolved6.set("heatRules", [{
+      target: circleTemplatepeople6,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
     seriesPeopleInvolved6.strokes.template.set("visible", false);
+
+
+
+
+    var seriesPeopleInvolved11 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "11",
+      valueField: "5",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople11 = am5.Template.new({});
+    seriesPeopleInvolved11.bullets.push(function () {
+      var bulletCircle1 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#f0fc00')
+      }, circleTemplatepeople11);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle1
+      });
+    },);
+    seriesPeopleInvolved11.set("heatRules", [{
+      target: circleTemplatepeople11,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved11.strokes.template.set("visible", false);
+
+
+    var seriesPeopleInvolved21 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "11",
+      valueField: "6",
+
+      valueXField: "0",
+    }));
+    var circleTemplatepeople21 = am5.Template.new({});
+    seriesPeopleInvolved21.bullets.push(function () {
+      var bulletCircle2 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#47fc00')
+      }, circleTemplatepeople21);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle2
+      });
+    },);
+    seriesPeopleInvolved21.set("heatRules", [{
+      target: circleTemplatepeople21,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved21.strokes.template.set("visible", false);
+
+
+    var seriesPeopleInvolved31 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "11",
+      valueField: "7",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople31 = am5.Template.new({});
+    seriesPeopleInvolved31.bullets.push(function () {
+      var bulletCircle3 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#00fcf4')
+      }, circleTemplatepeople31);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle3
+      });
+    },);
+    seriesPeopleInvolved31.set("heatRules", [{
+      target: circleTemplatepeople31,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved31.strokes.template.set("visible", false);
+
+
+    var seriesPeopleInvolved41 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "11",
+      valueField: "8",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople41 = am5.Template.new({});
+    seriesPeopleInvolved41.bullets.push(function () {
+      var bulletCircle4 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#003ffc')
+      }, circleTemplatepeople41);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle4
+      });
+    },);
+    seriesPeopleInvolved41.set("heatRules", [{
+      target: circleTemplatepeople41,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved41.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved51 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "11",
+      valueField: "9",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople51 = am5.Template.new({});
+    seriesPeopleInvolved51.bullets.push(function () {
+      var bulletCircle5 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#e700fc')
+      }, circleTemplatepeople51);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle5
+      });
+    },);
+    seriesPeopleInvolved51.set("heatRules", [{
+      target: circleTemplatepeople51,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved51.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved61 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "11",
+      valueField: "10",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople61 = am5.Template.new({});
+    seriesPeopleInvolved61.bullets.push(function () {
+      var bulletCircle6 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#fc0022')
+      }, circleTemplatepeople61);
+
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle6
+      });
+    },);
+    seriesPeopleInvolved61.set("heatRules", [{
+      target: circleTemplatepeople61,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved61.strokes.template.set("visible", false);
+
+
+    var seriesPeopleInvolved12 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "12",
+      valueField: "5",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople12 = am5.Template.new({});
+    seriesPeopleInvolved12.bullets.push(function () {
+      var bulletCircle1 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#f0fc00')
+      }, circleTemplatepeople12);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle1
+      });
+    },);
+    seriesPeopleInvolved12.set("heatRules", [{
+      target: circleTemplatepeople12,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved12.strokes.template.set("visible", false);
+
+
+    var seriesPeopleInvolved22 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "12",
+      valueField: "6",
+
+      valueXField: "0",
+    }));
+    var circleTemplatepeople22 = am5.Template.new({});
+    seriesPeopleInvolved22.bullets.push(function () {
+      var bulletCircle2 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#47fc00')
+      }, circleTemplatepeople22);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle2
+      });
+    },);
+    seriesPeopleInvolved22.set("heatRules", [{
+      target: circleTemplatepeople22,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved22.strokes.template.set("visible", false);
+
+
+    var seriesPeopleInvolved32 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "12",
+      valueField: "7",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople32 = am5.Template.new({});
+    seriesPeopleInvolved32.bullets.push(function () {
+      var bulletCircle3 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#00fcf4')
+      }, circleTemplatepeople32);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle3
+      });
+    },);
+    seriesPeopleInvolved32.set("heatRules", [{
+      target: circleTemplatepeople32,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved32.strokes.template.set("visible", false);
+
+
+    var seriesPeopleInvolved42 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "12",
+      valueField: "8",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople42 = am5.Template.new({});
+    seriesPeopleInvolved42.bullets.push(function () {
+      var bulletCircle4 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#003ffc')
+      }, circleTemplatepeople42);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle4
+      });
+    },);
+    seriesPeopleInvolved42.set("heatRules", [{
+      target: circleTemplatepeople42,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved42.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved52 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "11",
+      valueField: "9",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople52 = am5.Template.new({});
+    seriesPeopleInvolved52.bullets.push(function () {
+      var bulletCircle5 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#e700fc')
+      }, circleTemplatepeople52);
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle5
+      });
+    },);
+    seriesPeopleInvolved52.set("heatRules", [{
+      target: circleTemplatepeople52,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved52.strokes.template.set("visible", false);
+
+    var seriesPeopleInvolved62 = mainPanel.series.push(am5xy.LineSeries.new(root, {
+      calculateAggregates: true,
+      xAxis: xAxis,
+      yAxis: yAxisPeopleInvolved,                    //we link the Y-axis to the second y-axis we created
+      valueYField: "12",
+      valueField: "10",
+      valueXField: "0",
+    }));
+    var circleTemplatepeople62 = am5.Template.new({});
+    seriesPeopleInvolved62.bullets.push(function () {
+      var bulletCircle6 = am5.Circle.new(root, {
+        radius: 10,
+        fillOpacity: 0.4,
+        fill: am5.color('#fc0022')
+      }, circleTemplatepeople62);
+
+      return am5.Bullet.new(root, {
+        sprite: bulletCircle6
+      });
+    },);
+    seriesPeopleInvolved62.set("heatRules", [{
+      target: circleTemplatepeople62,
+      min: 0,
+      max: 10,
+      dataField: "value",
+      key: "radius"
+    }]);
+    seriesPeopleInvolved62.strokes.template.set("visible", false);
+
+
+
+
 
 
     seriesTotalHours.strokes.template.setAll({
@@ -487,6 +904,31 @@
       seriesPeopleInvolved6.data.setAll(data);
       seriesPeopleInvolved6.hide();
 
+      seriesPeopleInvolved11.data.setAll(data);
+      seriesPeopleInvolved11.hide();
+      seriesPeopleInvolved21.data.setAll(data);
+      seriesPeopleInvolved21.hide();
+      seriesPeopleInvolved31.data.setAll(data);
+      seriesPeopleInvolved31.hide();
+      seriesPeopleInvolved41.data.setAll(data);
+      seriesPeopleInvolved41.hide();
+      seriesPeopleInvolved51.data.setAll(data);
+      seriesPeopleInvolved51.hide();
+      seriesPeopleInvolved61.data.setAll(data);
+      seriesPeopleInvolved61.hide();
+
+      seriesPeopleInvolved12.data.setAll(data);
+      seriesPeopleInvolved12.hide();
+      seriesPeopleInvolved22.data.setAll(data);
+      seriesPeopleInvolved22.hide();
+      seriesPeopleInvolved32.data.setAll(data);
+      seriesPeopleInvolved32.hide();
+      seriesPeopleInvolved42.data.setAll(data);
+      seriesPeopleInvolved42.hide();
+      seriesPeopleInvolved52.data.setAll(data);
+      seriesPeopleInvolved52.hide();
+      seriesPeopleInvolved62.data.setAll(data);
+      seriesPeopleInvolved62.hide();
 
     });
 
@@ -521,39 +963,11 @@
           label: "Hours",
           form: "radio",
           value: "3"
-        }
-        //     {
-        //     id: "category",
-        //     label: "Categories",
-        //     form: "radio",
-        //     value: "",
-        //     checked: false
-        // },
-
-        // {
-        //     id: "totalhours",
-        //     label: "Total Hours",
-        //     form: "radio",
-        //     value: "",
-        //     checked: false
-        // },
-        // {
-        //     id: "emotionresult",
-        //     label: "Emotion of result",
-        //     form: "radio",
-        //     value: "",
-        //     checked: false
-        // }, {
-        //     id: "emotionprocess",
-        //     label: "Smiley/ Activity",
-        //     form: "radio",
-        //     value: "",
-        //     checked: false
-        // },
+        },
       ]
     });
 
-
+    var categoryselector = 1;
     myDropdown.getPrivate("dropdown").events.on("changed", function (ev) {
       console.log(ev);
       if (ev.item.value == '1') {
@@ -562,11 +976,32 @@
           yAxisemotion.hide();
           serieshours.hide();
           yAxishours.hide();
+          seriesPeopleInvolved1.hide();
+          seriesPeopleInvolved2.hide();
+          seriesPeopleInvolved3.hide();
+          seriesPeopleInvolved4.hide();
+          seriesPeopleInvolved5.hide();
+          seriesPeopleInvolved6.hide();
+          seriesPeopleInvolved11.hide();
+          seriesPeopleInvolved21.hide();
+          seriesPeopleInvolved31.hide();
+          seriesPeopleInvolved41.hide();
+          seriesPeopleInvolved51.hide();
+          seriesPeopleInvolved61.hide();
+          seriesPeopleInvolved12.hide();
+          seriesPeopleInvolved22.hide();
+          seriesPeopleInvolved32.hide();
+          seriesPeopleInvolved42.hide();
+          seriesPeopleInvolved52.hide();
+          seriesPeopleInvolved62.hide();
+          legend3.hide();
 
           legend1.show();
           legend2.show();
 
           seriescategory.show();
+          categoryselector = 1;
+          console.log(categoryselector);
           //    yAxiscategory.show();
         }
       }
@@ -576,12 +1011,33 @@
           yAxiscategory.hide();
           serieshours.hide();
           yAxishours.hide();
+          seriesPeopleInvolved1.hide();
+          seriesPeopleInvolved2.hide();
+          seriesPeopleInvolved3.hide();
+          seriesPeopleInvolved4.hide();
+          seriesPeopleInvolved5.hide();
+          seriesPeopleInvolved6.hide();
+          seriesPeopleInvolved11.hide();
+          seriesPeopleInvolved21.hide();
+          seriesPeopleInvolved31.hide();
+          seriesPeopleInvolved41.hide();
+          seriesPeopleInvolved51.hide();
+          seriesPeopleInvolved61.hide();
+          seriesPeopleInvolved12.hide();
+          seriesPeopleInvolved22.hide();
+          seriesPeopleInvolved32.hide();
+          seriesPeopleInvolved42.hide();
+          seriesPeopleInvolved52.hide();
+          seriesPeopleInvolved62.hide();
+          legend3.hide();
 
           legend1.show();
           legend2.show();
 
           seriesemotion.show();
           yAxisemotion.show();
+          categoryselector = 2;
+          console.log(categoryselector);
         }
       }
       if (ev.item.value == '3') {
@@ -590,12 +1046,33 @@
           yAxiscategory.hide();
           seriesemotion.hide();
           yAxisemotion.hide();
+          seriesPeopleInvolved1.hide();
+          seriesPeopleInvolved2.hide();
+          seriesPeopleInvolved3.hide();
+          seriesPeopleInvolved4.hide();
+          seriesPeopleInvolved5.hide();
+          seriesPeopleInvolved6.hide();
+          seriesPeopleInvolved11.hide();
+          seriesPeopleInvolved21.hide();
+          seriesPeopleInvolved31.hide();
+          seriesPeopleInvolved41.hide();
+          seriesPeopleInvolved51.hide();
+          seriesPeopleInvolved61.hide();
+          seriesPeopleInvolved12.hide();
+          seriesPeopleInvolved22.hide();
+          seriesPeopleInvolved32.hide();
+          seriesPeopleInvolved42.hide();
+          seriesPeopleInvolved52.hide();
+          seriesPeopleInvolved62.hide();
+          legend3.hide();
 
           legend1.show();
           legend2.show();
 
           serieshours.show();
           yAxishours.show();
+          categoryselector = 3;
+          console.log(categoryselector);
         }
       }
     });
@@ -604,103 +1081,211 @@
       stockChart: stockChart,
       name: "Highlight involvement",
       fixedLabel: true,
-      items: [{
-        id: "heading1",
-        label: "Under Construction",
-        className: "am5stock-list-info am5stock-list-heading"
-      },
-      {
-        id: "person1",
-        label: "Nikki",
-        form: "checkbox",
-      }, {
-        id: "person2",
-        label: "Leqi",
-        form: "checkbox",
-      },
-      {
-        id: "person3",
-        label: "Jelmer",
-        form: "checkbox",
-      },
-      {
-        id: "person4",
-        label: "Maas",
-        form: "checkbox",
-      },
-      {
-        id: "person5",
-        label: "Coach",
-        form: "checkbox",
-      },
-      {
-        id: "person6",
-        label: "External",
-        form: "checkbox",
-      }
+      items: [
+        {
+          id: "heading2",
+          label: "Highlight Involvement",
+          className: "am5stock-list-info am5stock-list-heading"
+        }, {
+          id: "person1",
+          label: "Nikki",
+          form: "checkbox",
+        }, {
+          id: "person2",
+          label: "Leqi",
+          form: "checkbox",
+        },
+        {
+          id: "person3",
+          label: "Jelmer",
+          form: "checkbox",
+        },
+        {
+          id: "person4",
+          label: "Maas",
+          form: "checkbox",
+        },
+        {
+          id: "person5",
+          label: "Coach",
+          form: "checkbox",
+        },
+        {
+          id: "person6",
+          label: "External",
+          form: "checkbox",
+        },
       ]
     });
 
     myDropdown2.getPrivate("dropdown").events.on("changed", function (ev) {
       console.log(ev);
+      console.log(categoryselector);
       if (ev.checked == true) {
-        // yAxisPeopleInvolved.show();
+        yAxisPeopleInvolved.show();
+        legend3.show();
       }
       else {
-        yAxisPeopleInvolved.hide();
+        //yAxisPeopleInvolved.hide();
       }
 
-      if (ev.item.id == 'person1') {
-        if (ev.checked == true) {
-          // console.log([[Person1]]);
-          seriesPeopleInvolved1.show();
+
+      if (categoryselector == 3) {
+        if (ev.item.id == 'person1') {
+          if (ev.checked == true) {
+            // console.log([[Person1]]);
+            seriesPeopleInvolved1.show();
+          }
+          else {
+            seriesPeopleInvolved1.hide();
+          }
         }
-        else {
-          seriesPeopleInvolved1.hide();
+        if (ev.item.id == 'person2') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved2.show();
+          }
+          else {
+            seriesPeopleInvolved2.hide();
+          }
+        }
+        if (ev.item.id == 'person3') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved3.show();
+          }
+          else {
+            seriesPeopleInvolved3.hide();
+          }
+        }
+        if (ev.item.id == 'person4') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved4.show();
+          }
+          else {
+            seriesPeopleInvolved4.hide();
+          }
+        }
+        if (ev.item.id == 'person5') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved5.show();
+          }
+          else {
+            seriesPeopleInvolved5.hide();
+          }
+        }
+        if (ev.item.id == 'person6') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved6.show();
+          }
+          else {
+            seriesPeopleInvolved6.hide();
+          }
         }
       }
-      if (ev.item.id == 'person2') {
-        if (ev.checked == true) {
-          seriesPeopleInvolved2.show();
+      if (categoryselector == 2) {
+        if (ev.item.id == 'person1') {
+          if (ev.checked == true) {
+            // console.log([[Person1]]);
+            seriesPeopleInvolved11.show();
+          }
+          else {
+            seriesPeopleInvolved11.hide();
+          }
         }
-        else {
-          seriesPeopleInvolved2.hide();
+        if (ev.item.id == 'person2') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved21.show();
+          }
+          else {
+            seriesPeopleInvolved21.hide();
+          }
+        }
+        if (ev.item.id == 'person3') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved31.show();
+          }
+          else {
+            seriesPeopleInvolved31.hide();
+          }
+        }
+        if (ev.item.id == 'person4') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved41.show();
+          }
+          else {
+            seriesPeopleInvolved41.hide();
+          }
+        }
+        if (ev.item.id == 'person5') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved51.show();
+          }
+          else {
+            seriesPeopleInvolved51.hide();
+          }
+        }
+        if (ev.item.id == 'person6') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved61.show();
+          }
+          else {
+            seriesPeopleInvolved61.hide();
+          }
         }
       }
-      if (ev.item.id == 'person3') {
-        if (ev.checked == true) {
-          seriesPeopleInvolved3.show();
+      if (categoryselector == 1) {
+        if (ev.item.id == 'person1') {
+          if (ev.checked == true) {
+            // console.log([[Person1]]);
+            seriesPeopleInvolved12.show();
+          }
+          else {
+            seriesPeopleInvolved12.hide();
+          }
         }
-        else {
-          seriesPeopleInvolved3.hide();
+        if (ev.item.id == 'person2') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved22.show();
+          }
+          else {
+            seriesPeopleInvolved22.hide();
+          }
         }
-      }
-      if (ev.item.id == 'person4') {
-        if (ev.checked == true) {
-          seriesPeopleInvolved4.show();
+        if (ev.item.id == 'person3') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved32.show();
+          }
+          else {
+            seriesPeopleInvolved32.hide();
+          }
         }
-        else {
-          seriesPeopleInvolved4.hide();
+        if (ev.item.id == 'person4') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved42.show();
+          }
+          else {
+            seriesPeopleInvolved42.hide();
+          }
         }
-      }
-      if (ev.item.id == 'person5') {
-        if (ev.checked == true) {
-          seriesPeopleInvolved5.show();
+        if (ev.item.id == 'person5') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved52.show();
+          }
+          else {
+            seriesPeopleInvolved52.hide();
+          }
         }
-        else {
-          seriesPeopleInvolved5.hide();
-        }
-      }
-      if (ev.item.id == 'person6') {
-        if (ev.checked == true) {
-          seriesPeopleInvolved6.show();
-        }
-        else {
-          seriesPeopleInvolved6.hide();
+        if (ev.item.id == 'person6') {
+          if (ev.checked == true) {
+            seriesPeopleInvolved62.show();
+          }
+          else {
+            seriesPeopleInvolved62.hide();
+          }
         }
       }
 
     });
+
     var myDropdown3 = am5stock.DropdownListControl.new(root, {
       stockChart: stockChart,
       name: "Additional overlays",
@@ -725,17 +1310,6 @@
           yAxisTotalHours.hide();
         }
       }
-
-      // if (ev.item.id == 'peopleinvolved') {
-      //   if (ev.checked == true) {
-      //     seriesPeopleInvolved.show();
-      //     yAxisPeopleInvolved.show();
-      //   }
-      //   else {
-      //     seriesPeopleInvolved.hide();
-      //     yAxisPeopleInvolved.hide();
-      //   }
-      // }
     });
     var toolbar = am5stock.StockToolbar.new(root, {
       container: document.getElementById("chartcontrols"),
@@ -812,6 +1386,37 @@
     ]);
     legend1.hide();
     legend2.hide();
+
+    var legend3 = stockChart.children.push(am5.Legend.new(root, {
+      nameField: "name",
+      fillField: "color",
+      strokeField: "color",
+      // fillOpacity: 0.5,
+      centerX: am5.percent(20),
+      x: am5.percent(20)
+    }));
+
+    legend3.data.setAll([{
+      name: "Nikki",
+      color: am5.color("#f0fc00")
+    }, {
+      name: "Leqi",
+      color: am5.color("#47fc00")
+    }, {
+      name: "Jelmer",
+      color: am5.color("#00fcf4")
+    }, {
+      name: "Maas",
+      color: am5.color("#003ffc")
+    }, {
+      name: "Coach",
+      color: am5.color("#e700fc")
+    }, {
+      name: "External",
+      color: am5.color("#fc0022")
+    },
+    ]);
+    legend3.hide();
   }); // end am5.ready()
 
 </script>
